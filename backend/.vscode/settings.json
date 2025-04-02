@@ -1,0 +1,14 @@
+{
+    "sqltools.connections": [
+        {
+            "previewLimit": 50,
+            "server": "localhost",
+            "port": 5432,
+            "driver": "PostgreSQL",
+            "name": "PlanAPlan",
+            "database": "planaplan_db",
+            "username": "planaplan",
+            "password": "asdf1234"
+        }
+    ]
+}

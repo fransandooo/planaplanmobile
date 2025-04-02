@@ -1,0 +1,114 @@
+### Test the server
+GET http://localhost:7788/
+Accept: application/json
+
+
+### Register user
+POST http://localhost:7788/api/auth/register
+Content-Type: application/json
+
+{
+    "name": "Gonzalo",
+    "surname": "Prueba",
+    "email": "gonzalo@test.com",
+    "password": "1234"
+}
+
+### Get user token
+### The result from this request should be used in the Authorization header
+POST http://localhost:7788/api/auth/login
+Content-Type: application/json
+
+{
+    "email": "gonzalo@test.com",
+    "password": "1234"
+}
+
+
+### Create a plan
+### You need to put the token in the Authorization header
+# POST http://localhost:7788/create-plan
+# Content-Type: application/json
+# Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjgxMDA0MzkyLTBhZDktNGMxNy05NmRmLTIyZWJmNTUyNGI5NiIsImVtYWlsIjoiZ29uemFsb0B0ZXN0LmNvbSIsImlhdCI6MTc0MjAzNjEzNSwiZXhwIjoxNzQyMDM5NzM1fQ.2zRo17BX92pVmrf_jWLl3hc406oGOzuNdwmuLM2UVdc
+
+# {
+#     "name": "Excursión al monte",
+#     "description": "Vamos a hacer una excursión al monte",
+#     "totalexpenses": 100,
+#     "date": "2023-01-01",
+#     "location": "Madrid",
+#     "organizer-id": "81004392-0ad9-4c17-96df-22ebf5524b96"
+# } 
+
+### Get all the events
+### Paste the token in the Authorization header or use
+GET http://localhost:7788/api/plan/events
+Accept: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjgxMDA0MzkyLTBhZDktNGMxNy05NmRmLTIyZWJmNTUyNGI5NiIsImVtYWlsIjoiZ29uemFsb0B0ZXN0LmNvbSIsImlhdCI6MTc0MjAzNjAwMSwiZXhwIjoxNzQyMDM5NjAxfQ.bBNuqpTqJM2HEi7doGDJeYuKI0V7pJDa5sqoU1lpfYQ
+
+## Invita user to a plan
+### You need to put a planId in the path and the token in the Authorization header
+### In the body you need to put the email of the user you want to invite
+POST http://localhost:7788/api/plan/1c44a0ff-e2d0-40e6-b252-2c83a4c2d985/invite
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjgxMDA0MzkyLTBhZDktNGMxNy05NmRmLTIyZWJmNTUyNGI5NiIsImVtYWlsIjoiZ29uemFsb0B0ZXN0LmNvbSIsImlhdCI6MTc0MjAzNjAwMSwiZXhwIjoxNzQyMDM5NjAxfQ.bBNuqpTqJM2HEi7doGDJeYuKI0V7pJDa5sqoU1lpfYQ
+
+{
+    "emails": "gonzalo@test.com"
+}
+
+### Assign responsibility to participants
+### You need to put a planId in the path and the token in the Authorization header
+### In the body you need to put the userId and the responsibility
+POST http://localhost:7788/api/resp/1c44a0ff-e2d0-40e6-b252-2c83a4c2d985/assign
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjgxMDA0MzkyLTBhZDktNGMxNy05NmRmLTIyZWJmNTUyNGI5NiIsImVtYWlsIjoiZ29uemFsb0B0ZXN0LmNvbSIsImlhdCI6MTc0MjAzNjAwMSwiZXhwIjoxNzQyMDM5NjAxfQ.bBNuqpTqJM2HEi7doGDJeYuKI0V7pJDa5sqoU1lpfYQ
+
+{   "userId": "81004392-0ad9-4c17-96df-22ebf5524b96",
+    "responsibility": "Comprar Palomitas"
+}
+
+### Assign responsibility to participants
+### You need to put a planId in the path and the token in the Authorization header
+### In the body you need to put the userId and the responsibility
+POST http://localhost:7788/api/resp/1c44a0ff-e2d0-40e6-b252-2c83a4c2d985/assign
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjgxMDA0MzkyLTBhZDktNGMxNy05NmRmLTIyZWJmNTUyNGI5NiIsImVtYWlsIjoiZ29uemFsb0B0ZXN0LmNvbSIsImlhdCI6MTc0MjAzNjAwMSwiZXhwIjoxNzQyMDM5NjAxfQ.bBNuqpTqJM2HEi7doGDJeYuKI0V7pJDa5sqoU1lpfYQ
+
+{   "userId": "1b59e180-e4b6-43b5-a67c-3cefeda8881e",
+    "responsibility": "Traer la cerveza"
+}
+
+### Create list of taks for a plan
+### You need to put a planId in the path and the token in the Authorization header
+### In the body you need to put an array of responsibilities
+POST http://localhost:7788/api/resp/1c44a0ff-e2d0-40e6-b252-2c83a4c2d985/responsibilities
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjgxMDA0MzkyLTBhZDktNGMxNy05NmRmLTIyZWJmNTUyNGI5NiIsImVtYWlsIjoiZ29uemFsb0B0ZXN0LmNvbSIsImlhdCI6MTc0MjAzNjAwMSwiZXhwIjoxNzQyMDM5NjAxfQ.bBNuqpTqJM2HEi7doGDJeYuKI0V7pJDa5sqoU1lpfYQ
+
+{   
+    "responsibilities": [
+        "Preparar la excursión", 
+        "Convencer a la gente para que se levanten pronto", 
+        "Echar gasolina al coche", 
+        "Recoger a toda la banda", 
+        "Ir al monte", 
+        "Soy el guía",
+        "Pastorear al personal",
+        "Contar chistes"
+        ]
+}
+
+### Pick a responsibility
+### You need to put a planId in the path and the token in the Authorization header
+### In the body you need to put the userId and the responsibilityId
+POST http://localhost:7788/api/resp/1c44a0ff-e2d0-40e6-b252-2c83a4c2d985/pick
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjgxMDA0MzkyLTBhZDktNGMxNy05NmRmLTIyZWJmNTUyNGI5NiIsImVtYWlsIjoiZ29uemFsb0B0ZXN0LmNvbSIsImlhdCI6MTc0MjAzNjAwMSwiZXhwIjoxNzQyMDM5NjAxfQ.bBNuqpTqJM2HEi7doGDJeYuKI0V7pJDa5sqoU1lpfYQ
+
+{   "userId": "81004392-0ad9-4c17-96df-22ebf5524b96",
+    "responsibilityId": "f4e44664-57e8-482c-9ed5-ed1a4d475fa7"
+}
+
+
+
